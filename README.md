@@ -49,13 +49,13 @@ Example:
 	"token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 	"coins":
 	{
-		100: 43,
-		50: 102,
-		20: 243,
-		10: 300,
-		5: 400
-		2: 100,
-		1: 200
+		"100": 43,
+		"50": 102,
+		"20": 243,
+		"10": 300,
+		"5": 400,
+		"2": 100,
+		"1": 200
 	}
 }
 ```
@@ -93,13 +93,13 @@ Example:
 	"value": 72,
 	"coins":
 	{
-		100: 12,
-		50: 10,
-		20: 43,
-		10: 30,
-		5: 40
-		2: 10,
-		1: 2
+		"100": 12,
+		"50": 10,
+		"20": 43,
+		"10": 30,
+		"5": 40,
+		"2": 10,
+		"1": 2
 	}
 }
 ```
@@ -112,7 +112,6 @@ Example:
 
 **Response**
 
-- `400 Bad Request` if one or more parameters is missing, or the data provided is invalid
 - `200 OK` on success
 
 ```json
@@ -171,10 +170,10 @@ Example:
 Example:
 ```json
 {
-	100: 1,
-	50: 1,
-	20: 2,
-	2: 1
+	"100": 1,
+	"50": 1,
+	"20": 2,
+	"2": 1
 }
 ```
 
@@ -196,9 +195,9 @@ Example:
 		"value": 72,
 		"coins":
 		{
-			50: 1,
-			20: 2,
-			2: 1
+			"50": 1,
+			"20": 2,
+			"2": 1
 		}
 	}
 }
@@ -213,8 +212,8 @@ Example:
 		"value": 22,
 		"coins":
 		{
-			20: 2,
-			2: 1
+			"20": 2,
+			"2": 1
 		}
 	}
 }

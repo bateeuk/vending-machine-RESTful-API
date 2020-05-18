@@ -20,7 +20,7 @@ def pretty_print_response(response):
     )         
     
 def test_post_headers_body_json_fail():
-    url = 'https://httpbin.org/post'
+    url = 'http://localhost:5000/'
     
     # Additional headers.
     headers = {'Content-Type': 'application/json' } 

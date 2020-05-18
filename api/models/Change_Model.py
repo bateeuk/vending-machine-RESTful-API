@@ -1,16 +1,17 @@
 
 # db interaction
-import sqlite3
+from models.DB_Model import DB_Model
 
 class Change_Model():
     def __init__(self):
-        self.conn = sqlite3.connect('../vend.db')
+        self.db = DB_Model()
         
     def get_change(self):
-        change = list()
-        if(self.conn is not None):
-            c = self.conn.cursor()
-            c.execute('SELECT coin, quantity FROM change_float')
-            change = c.fetchall()
-            c.close()
-        return change
+        return self.db.query_db_as_is('SELECT coin, quantity FROM change_float')
+    
+    def delete_change(self):
+        self.db.query_db_for_list('UPDATE change_float SET quantity=0')
+    
+    def add_change(self, quantity, coin):
+        self.db.query_db_for_list('UPDATE change_float SET quantity= (quantity+?) WHERE coin=?', (quantity, coin))
+        

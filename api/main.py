@@ -23,7 +23,7 @@ def index():
     # Show the README file to provide suitable documentation on the usage of the API
 
     # Open the README file
-    with open('README.md', 'r') as markdown_file:
+    with open('../README.md', 'r') as markdown_file:
 
         # Read the content of the file
         content = markdown_file.read()

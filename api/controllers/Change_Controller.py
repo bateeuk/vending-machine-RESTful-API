@@ -1,8 +1,6 @@
 
-# Import json for data formatting
-import json
-
 # Import the classes
+from models.Coin_Model import Coin_Model
 from models.Change_Model import Change_Model
 
 class Change_Controller():
@@ -18,4 +16,14 @@ class Change_Controller():
 
         return products
 
+    def delete_change(self):
+        self.cm.delete_change()
+
+    def add_change(self):
+        # grab the provided coin data from the request
+        coin_model = Coin_Model()
+        
+        for coin, value in coin_model.coins.items():
+            if value is not None:
+                self.cm.add_change(value, coin)
 

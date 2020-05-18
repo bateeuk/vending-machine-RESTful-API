@@ -1,8 +1,7 @@
 
-# Import reqparse to work with the provided coin data
-from flask_restful import reqparse
 
 # Import the classes
+from models.Coin_Model import Coin_Model
 from models.Vend_Model import Vend_Model
 
 class Vend_Controller():
@@ -21,8 +20,8 @@ class Vend_Controller():
         return self.product_list
 
     def purchase_product(self, location):
-        print ("purchase_product(self, location):")
-        self.product_list = self.vm.get_product(location.upper())
+        location = location.upper()
+        self.product_list = self.vm.get_product(location)
 
         # Check if location exists
         if len(self.product_list) == 0:
@@ -32,30 +31,18 @@ class Vend_Controller():
         if self.product_list[0]['quantity'] == 0:
             return { }, 404
 
-        parser = reqparse.RequestParser()
-        parser.add_argument('200', type=int, help='help msg for 200')
-        parser.add_argument('100', type=int, help='help msg for 100')
-        parser.add_argument('50', type=int, help='help msg for 50')
-        parser.add_argument('20', type=int, help='help msg for 20')
-        parser.add_argument('10', type=int, help='help msg for 10')
-        parser.add_argument('5', type=int, help='help msg for 5')
-        parser.add_argument('2', type=int, help='help msg for 2')
-        parser.add_argument('1', type=int, help='help msg for 1')
-
-        # Parse the arguments into an object
-        payment_coins = parser.parse_args()
+        # grab the provided coin data from the request
+        coin_model = Coin_Model()
+        payment_coins = coin_model.coins
+        payment_value = coin_model.get_coin_value()
         
-        # Calculate the total value of the money provided (in pence, i.e. £1.43 becomes 143)
-        payment_value = 0
-        for coin, value in payment_coins.items():
-            if value is not None:
-                payment_value += int(coin) * value
-
-        # check payment
+        # check payment is enough to cover the price of the product
         if payment_value < self.product_list[0]['price']:
             return { "change_returned": { "value": payment_value, "coins": payment_coins } }, 402
 
-        
+        ##TODO handle payment etc.
+        ##TODO calculate change
 
+        self.vm.reduce_quantity(location)
 
-        
+        return {"msg":"done"}, 200

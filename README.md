@@ -228,6 +228,9 @@ Why:
 - MVC
 - JWT
 
+Coins only, no notes or card payment
+Left flexibility for notes by simply adding additional data to the database and Coin_Model
+
 ## Installation Instructions
 
 #some setup commands:

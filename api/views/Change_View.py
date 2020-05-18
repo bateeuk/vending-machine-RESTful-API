@@ -18,8 +18,9 @@ class Change_View(Resource):
         return change, 200
 
     def post(self):
-        
+        self.cc.add_change()
         return {'message': 'POST within Change_View', 'data': {}}, 200
 
-    def put(self):
-        return {'message': 'PUT within Change_View', 'data': {}}, 200
+    def delete(self):
+        self.cc.delete_change()
+        return {'message': 'delete within Change_View', 'data': {}}, 200

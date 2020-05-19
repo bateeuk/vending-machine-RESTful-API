@@ -1,6 +1,6 @@
 
-# Import reqparse to work with the provided coin data
-from flask_restful import reqparse
+# Import request to work with the provided coin data
+from flask import request
 
 # Import the classes
 from models.change_model import Change_Model
@@ -18,38 +18,35 @@ class Change_Controller():
 
     def get_coins_from_request(self):
         # if there isn't already one, setup the coins within the Change_Model as a basis for acceptable coin types
-        if len(self.cm.coins) == 0:
-            self.get_available_change()
+        if len(self.cm.coins['coins']) == 0:
+            self.cm.get_change()
+
+        acceptable_coins = self.cm.coins['coins']
         
-        #setup a new RequestParser() to pick up the provided coin types and values
-        parser = reqparse.RequestParser()
-        for coin, value in self.cm.coins.items():
-            parser.add_argument(coin, type=int, help='Coin values must be a whole number (integer)')
+        # pick up the provided coin types and values
+        provided_coins = request.get_json()
+        if provided_coins.get('coins') is None:
+            print("Missing coins param")
+            return { "error" : "Missing coins param" }, 400
 
-        parser.add_argument('token', required=False)
+        # check that all coins provided 
+        for coin, value in provided_coins['coins'].items():
+            if acceptable_coins.get(coin) is None:
+                print("error invalid coin")
+                return { "error" : "invalid coin" }, 400
+            if type(value) is not int:
+                print("error type error")
+                return { "error" : "Coin values must be a whole number (integer)" }, 400
 
-        # Parse the arguments into an object
-        # strict=True means invalid coins are not accepted
-        self.cm.coins = parser.parse_args(strict=True)
+        self.cm.coins['coins'] = provided_coins['coins']
+        self.cm.update_coin_value()
 
     def add_change(self):
         # grab the provided coin data from the request
         self.get_coins_from_request()
-        
-        for coin, value in self.cm.coins.items():
+        for coin, value in self.cm.coins['coins'].items():
             if value is not None:
                 self.cm.add_change(value, coin)
-        
-        # update the stored coins/float value
-        self.cm.get_change()
-    
-    def get_coin_value(self):
-        # Calculate the total value of the money provided (in pence, i.e. £1.43 becomes 143)
-        coin_value = 0
-        for coin, value in self.cm.coins.items():
-            if value is not None:
-                coin_value += int(coin) * value
-        return coin_value
 
     def remove_change(self, quantity, coin):
         self.cm.remove_change(quantity, coin)

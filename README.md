@@ -142,9 +142,7 @@ Example:
 
 **Response**
 
-- `400 Bad Request` if one or more parameters is missing, or the data provided is invalid
-- `404 Not Found` if the product location does not exist
-- `204 No Content` if the product location does exist but there is no product available
+- `404 Not Found` the product location does not exist, or the location does exist but the product is not available (i.e. quantity of 0)
 - `200 OK` on success
 
 ```json
@@ -170,10 +168,12 @@ Example:
 Example:
 ```json
 {
-	"100": 1,
-	"50": 1,
-	"20": 2,
-	"2": 1
+	"coins" : {
+		"100": 1,
+		"50": 1,
+		"20": 2,
+		"2": 1
+	}
 }
 ```
 
@@ -182,17 +182,16 @@ Example:
 **Response**
 
 - Errors with no response JSON
--- `204 No Content` if the product location does exist but there is no product available
--- `400 Bad Request` if one or more parameters is missing, or the data provided is invalid
--- `404 Not Found` if the product location does not exist
+-- `400 Bad Request` one or more parameters is missing, or the data provided is invalid
+-- `404 Not Found` the product location does not exist, or the location does exist but the product is not available (i.e. quantity of 0)
 - Errors with response JSON
--- `402 Payment Required` if the product location does exist but costs more than the money provided
--- `503 Service Not Available` if there is not enough money in the float to cover the change for the purchase
+-- `402 Payment Required` the product location does exist but costs more than the money provided
+-- `503 Service Not Available` there is not enough money in the float to cover the change for the purchase
 ```json
 {
 	"change_returned":
 	{
-		"value": 72,
+		"value": 92,
 		"coins":
 		{
 			"50": 1,

@@ -11,7 +11,7 @@ class Vend_Model():
         return products
         
     def get_product(self, location):
-        product = self.db.query_db_for_list('SELECT location, name, price, quantity FROM product WHERE location = ?', (location,))
+        product = self.db.query_db_for_list('SELECT location, name, price, quantity FROM product WHERE location = ? AND quantity > 0', (location,))
         return product
 
     def reduce_quantity(self, location):

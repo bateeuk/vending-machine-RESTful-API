@@ -1,9 +1,12 @@
 
-# Import reqparse to work with the provided login data
-from flask_restful import reqparse
+# Import request to pickup the provided login data
+from flask import request
 
 # Import jwt (JSON web token) and datetime for the token and expiration
 import datetime, jwt
+
+# Import bcrypt for hashing
+import bcrypt
 
 #import the classes
 from models.auth_model import Auth_Model
@@ -16,34 +19,35 @@ class Auth_Controller:
 
     def login(self):
         
-        #setup a new RequestParser() to pick up the provided coin types and values
-        parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True, help="username cannot be blank!")
-        parser.add_argument('password', required=True, help="password cannot be blank!")
+        # Parse the arguments into an object to pick up the provided coin types and values
+        login_obj = request.get_json()
 
-        # Parse the arguments into an object
-        login_obj = parser.parse_args()
+        if 'username' not in login_obj.keys() or 'password' not in login_obj.keys():
+            return {'message': 'invalid or missing params' }, 400
+
+        #salt used to encrypt the encoded message (self.ok)
+        salt = bcrypt.gensalt()
 
         if self.am.login(login_obj) == False:
             return {'message': 'auth error' }, 401
         else:
-            token = jwt.encode( { 'ok' : self.ok, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=15) }, self.secretkey, algorithm='HS256' )
+            hashed_ok = bcrypt.hashpw(self.ok.encode('utf-8'), salt)
+            token = jwt.encode( { 'ok' : hashed_ok.decode('utf-8'), 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=15) }, self.secretkey, algorithm='HS256' )
             return {'token': token.decode('UTF-8') }, 200
 
     def check_token(self):
         # get the token from the request
-        parser = reqparse.RequestParser()
-        parser.add_argument('token', required=True, help="token cannot be blank!")
-
-        # Parse the arguments into an object
-        token_obj = parser.parse_args()
+        token_obj = request.get_json()
 
         try:
+            #salt used to encrypt the encoded message (self.ok)
+            salt = bcrypt.gensalt()
             decoded_token = jwt.decode(token_obj['token'], self.secretkey, algorithms=['HS256'])
-            if decoded_token['ok'] == self.ok:
+
+            if bcrypt.checkpw(self.ok.encode('utf-8'), decoded_token['ok'].encode('utf-8')):
                 return {'message': 'check_token()', 'data': {}}, 200
+            else:
+                return {'message': 'auth error' }, 401
 
         except:
             return {'message': 'missing or invalid token auth error' }, 401
-
-        return {'message': 'auth error' }, 401

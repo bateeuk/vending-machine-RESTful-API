@@ -1,5 +1,5 @@
 
-## Import bcrypt for password hashing
+# Import bcrypt for password hashing
 import bcrypt
 
 # db interaction

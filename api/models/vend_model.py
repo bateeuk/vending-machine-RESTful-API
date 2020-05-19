@@ -1,6 +1,6 @@
 
 # db interaction
-from models.DB_Model import DB_Model
+from models.db_model import DB_Model
 
 class Vend_Model():
     def __init__(self):

@@ -4,7 +4,7 @@ from flask import Flask, g
 from flask_restful import Resource, Api, reqparse
 
 # Import the classes
-from controllers.Vend_Controller import Vend_Controller
+from controllers.vend_controller import Vend_Controller
 
 class Vend_View(Resource):
     def __init__(self):

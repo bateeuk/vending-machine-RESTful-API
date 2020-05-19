@@ -2,8 +2,8 @@
 import json
 
 # Import the classes
-from models.Vend_Model import Vend_Model
-from controllers.Change_Controller import Change_Controller
+from models.vend_model import Vend_Model
+from controllers.change_controller import Change_Controller
 
 class Vend_Controller():
     def __init__(self):

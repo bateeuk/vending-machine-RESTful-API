@@ -1,5 +1,5 @@
-import json
-# import psycopg2
+
+
 import sqlite3
 
 class DB_Model:
@@ -20,5 +20,6 @@ class DB_Model:
         c = self.conn.cursor()
         c.execute(query)
         r = c.fetchall()
+        self.conn.commit()
         c.close()
         return r

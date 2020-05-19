@@ -3,7 +3,7 @@
 from flask_restful import reqparse
 
 # Import the classes
-from models.Change_Model import Change_Model
+from models.change_model import Change_Model
 
 class Change_Controller():
     def __init__(self):
@@ -25,6 +25,8 @@ class Change_Controller():
         parser = reqparse.RequestParser()
         for coin, value in self.cm.coins.items():
             parser.add_argument(coin, type=int, help='Coin values must be a whole number (integer)')
+
+        parser.add_argument('token', required=False)
 
         # Parse the arguments into an object
         # strict=True means invalid coins are not accepted

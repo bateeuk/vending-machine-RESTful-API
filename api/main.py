@@ -7,10 +7,10 @@ from flask import Flask, g
 from flask_restful import Resource, Api
 
 # Import the classes
-from views.Change_View import Change_View
-from views.Auth_View import Auth_View
-from views.Vend_View import Vend_View
-from views.Products_View import Products_View
+from views.change_view import Change_View
+from views.auth_view import Auth_View
+from views.vend_view import Vend_View
+from views.products_view import Products_View
 
 # Create an instance of Flask
 app = Flask(__name__)

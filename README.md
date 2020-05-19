@@ -17,8 +17,8 @@ A RESTful implementation of a basic vending machine system
 Example:
 ```json
 {
-	"username" : "",
-	"password" : ""
+	"username" : "jsmith",
+	"password" : "Or4pgmT@sk"
 }
 ```
 
@@ -29,7 +29,7 @@ Example:
 - `200 OK` on success
 ```json
 {
-	"token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+	"token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvayI6Im9rIiwiZXhwIjoxNTg5OTAwNDAyfQ.p40fA0hpOzEmcvQPeHF2BYZncF1OfLWwwEaxQ-bc1DU"
 }
 ```
 
@@ -46,7 +46,7 @@ Example:
 Example:
 ```json
 {
-	"token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+	"token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvayI6Im9rIiwiZXhwIjoxNTg5OTAwNDAyfQ.p40fA0hpOzEmcvQPeHF2BYZncF1OfLWwwEaxQ-bc1DU",
 	"coins":
 	{
 		"100": 43,

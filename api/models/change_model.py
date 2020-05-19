@@ -1,7 +1,7 @@
 
 
 # db interaction
-from models.DB_Model import DB_Model
+from models.db_model import DB_Model
 
 class Change_Model():
     def __init__(self):

@@ -14,7 +14,7 @@ class Change_View(Resource):
         self.cc = Change_Controller()
 
     def get(self):
-        change = self.cc.view_change()
+        change = self.cc.get_available_change()
         return change, 200
 
     def post(self):

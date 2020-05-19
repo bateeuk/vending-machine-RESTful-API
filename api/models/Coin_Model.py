@@ -4,9 +4,9 @@ from flask_restful import reqparse
 
 class Coin_Model():
     def __init__(self):
-        self.get_coins()
+        self.get_coins_from_request()
 
-    def get_coins(self):
+    def get_coins_from_request(self):
         parser = reqparse.RequestParser()
         parser.add_argument('200', type=int, help='The value of the 200 coin is not a whole number')
         parser.add_argument('100', type=int, help='The value of the 100 coin is not a whole number')

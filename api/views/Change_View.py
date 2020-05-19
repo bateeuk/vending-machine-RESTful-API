@@ -14,8 +14,8 @@ class Change_View(Resource):
         self.cc = Change_Controller()
 
     def get(self):
-        change = self.cc.get_available_change()
-        return change, 200
+        self.cc.get_available_change()
+        return self.cc.cm.coins, 200
 
     def post(self):
         self.cc.add_change()

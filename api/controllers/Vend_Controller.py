@@ -46,9 +46,6 @@ class Vend_Controller():
         # add the payment money to the float
         change_controller.add_change()
 
-        # update the coins/float value
-        change_controller.get_available_change()
-
         total_refund_value = payment_value - self.product_list[0]['price']
         remaining_refund_value = payment_value - self.product_list[0]['price']
 

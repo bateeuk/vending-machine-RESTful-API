@@ -11,25 +11,24 @@ class Change_Controller():
         
     def get_available_change(self):
         # call the Change_Model to get the coin details from the database
-        change_dict = self.cm.get_change()
-        return change_dict
+        self.cm.get_change()
 
     def delete_change(self):
         self.cm.delete_change()
 
     def get_coins_from_request(self):
+        # if there isn't already one, setup the coins within the Change_Model as a basis for acceptable coin types
+        if len(self.cm.coins) == 0:
+            self.get_available_change()
+        
+        #setup a new RequestParser() to pick up the provided coin types and values
         parser = reqparse.RequestParser()
-        parser.add_argument('200', type=int, help='The value of the 200 coin is not a whole number')
-        parser.add_argument('100', type=int, help='The value of the 100 coin is not a whole number')
-        parser.add_argument('50', type=int, help='The value of the 50 coin is not a whole number')
-        parser.add_argument('20', type=int, help='The value of the 20 coin is not a whole number')
-        parser.add_argument('10', type=int, help='The value of the 10 coin is not a whole number')
-        parser.add_argument('5', type=int, help='The value of the 5 coin is not a whole number')
-        parser.add_argument('2', type=int, help='The value of the 2 coin is not a whole number')
-        parser.add_argument('1', type=int, help='The value of the 1 coin is not a whole number')
+        for coin, value in self.cm.coins.items():
+            parser.add_argument(coin, type=int, help='Coin values must be a whole number (integer)')
 
         # Parse the arguments into an object
-        self.cm.coins = parser.parse_args()
+        # strict=True means invalid coins are not accepted
+        self.cm.coins = parser.parse_args(strict=True)
 
     def add_change(self):
         # grab the provided coin data from the request
@@ -38,6 +37,9 @@ class Change_Controller():
         for coin, value in self.cm.coins.items():
             if value is not None:
                 self.cm.add_change(value, coin)
+        
+        # update the stored coins/float value
+        self.cm.get_change()
     
     def get_coin_value(self):
         # Calculate the total value of the money provided (in pence, i.e. £1.43 becomes 143)

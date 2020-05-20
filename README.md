@@ -193,6 +193,7 @@ Example:
             "price": 60,
             "quantity": 2
         }
+    ]
 }
 ```
 ## /product
@@ -301,22 +302,78 @@ Example:
 }
 ```
 
-## Design Decisions
+# Installation Instructions
 
-Why:
-- RESTful API
-- Python
-- Flask
-- MVC
-- JWT
+## Server-side API
 
-Coins only, no notes or card payment
-Left flexibility for notes by simply adding additional data to the database and Coin_Model
+This Python app was built and tested using Python 3.8.
 
-## Installation Instructions
+The app was created in a virtual environment, see setup instructions below, but you can install it on any system running Python 3.8
 
-#some setup commands:
+**Create a virtual environment**
+`$ virtualenv -p python3.8 venv`
 
+**Run/Enter the virtual environment**
+`$ source venv/bin/activate`
 
-#compile and run the source code
+**move into the root of the project folder**
+`$ cd path/to/project/root`
 
+**Install the requirements**
+`$ pip3 install -r requirements.txt`
+
+**move into the api folder**
+`$ cd api`
+
+**assign and run the Python script**
+`$ export FLASK_APP=main.py`
+
+`$ flask run --host 0.0.0.0`
+
+**Running the app**
+Load up the URL in the browser: http://127.0.0.1:5000/
+
+**Disable the Flask server from running**
+`CTRL + C`
+
+**Leave the virtual environment**
+`$ deactivate`
+
+## Client-side Test Interface
+The test interface is a static HTML page with some JavaScript so does not need to run through a server.
+Simply open the .html file locally in a webbrowser to start testing the system.
+
+# Design Decisions
+
+**RESTful API**
+- Efficient server-side processing as REST is stateless so doesn't need to track active users.
+- Commonly used and understood in the industry, making it easier to support client-side applications
+
+**Python**
+- It's fast and flexible
+- Works well for RESTful implementations
+
+**Flask**
+- Lightweight and efficient
+- Easy to use
+
+**Model-View-Controller (MVC) class structure**
+- High cohesion
+- Loose coupling
+- Easier modification of code due to the above two points
+
+**SQLite3**
+- fast and lightweight
+
+**JSON Web Tokens (JWT)**
+- Compact
+- One of the more secure methods for auth
+- Easy-to-use
+
+**Auth params in body, not in headers**
+You may notice that the authentication is not done using the HTTP headers. This was an oversight on my part and should be changed.
+
+**Currency**
+The system lends itself well to any base-10 currency.
+In this implementation, British coins upto the value of £2 has been used. No notes or card payments.
+However, all coin denominations are stored in the database only. Therefore, notes could be added by simply inputting their value in pennies (i.e. £5 becomes 500). Note: this is out of scope so not been tested.

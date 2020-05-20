@@ -5,6 +5,7 @@ import shelve
 # Import the Flask framework
 from flask import Flask, g
 from flask_restful import Resource, Api
+from flask_cors import CORS, cross_origin
 
 # Import the classes
 from views.change_view import Change_View
@@ -15,10 +16,15 @@ from views.products_view import Products_View
 # Create an instance of Flask
 app = Flask(__name__)
 
+#allow access from locally run interface.html
+app.config['CORS_HEADERS'] = 'Content-Type'
+cors = CORS(app, resorces={r'/*': {"origins": '*'}})
+
 # Create the API
 api = Api(app)
 
 @app.route("/")
+@cross_origin()
 def index():
     """ Show the README file to provide suitable documentation on the usage of the API """
 

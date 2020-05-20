@@ -87,8 +87,13 @@ class Auth_Controller:
             If the token is invalid, raise a 401 error
         """
         # get the token from the request
-        token_obj = request.get_json()
-
+        # handles URL parameters JSON in the request
+        token_obj = {}
+        if request.args.get('token') is None:
+            token_obj = request.get_json()
+        else:
+            token_obj['token'] = request.args.get('token')
+        
         try:
             decoded_token = jwt.decode(token_obj['token'], self.secretkey, algorithms=['HS256'])
             if bcrypt.checkpw(self.check_value.encode('utf-8'), decoded_token['check_value'].encode('utf-8')) == False:

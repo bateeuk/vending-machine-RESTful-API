@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Interface to the Vending Machine RESTful API">
+  <meta name="author" content="Paul Goddard">
+
+  <title>Vending Machine RESTful API</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <h2>Vending Machine RESTful API</h2>
+    </div>
+    <div class="row">
+      <div class="col">
+        <form class="form-horizontal" id="request_builder">
+          <fieldset>
+          
+          
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-8 control-label" for="url">URL &amp; Port Number</label>  
+            <div class="col-md-8">
+            <input id="url" name="url" type="url" placeholder="http://myserver:8080" class="form-control input-md" required="">
+              
+            </div>
+          </div>
+          
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-8 control-label" for="method">HTTP Method</label>
+            <div class="col-md-8">
+              <select id="method" name="method" class="form-control">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="DELETE">DELETE</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Select Basic -->
+          <div class="form-group">
+            <label class="col-md-8 control-label" for="route">Route</label>
+            <div class="col-md-8">
+              <select id="route" name="route" class="form-control">
+                <option value="/login">/login</option>
+                <option value="/float">/float</option>
+                <option value="/products">/products</option>
+                <option value="/product">/product</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Text input-->
+          <div class="form-group">
+            <label class="col-md-8 control-label" for="location">Product Location</label>  
+            <div class="col-md-8">
+            <input id="location" name="location" type="text" class="form-control input-md">
+            <div id="location_feedback" class="text-danger"></div>
+            </div>
+          </div>
+          
+          <!-- Textarea -->
+          <div class="form-group">
+            <label class="col-md-8 control-label" for="request_body">Your Request (as JSON)</label>
+            <div class="col-md-8">
+              <textarea class="form-control" id="request_body" name="request_body" rows="10"></textarea>
+            </div>
+          </div>
+          
+          </fieldset>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+      
+      <div class="col">
+        <div class="row">
+          <div class="col-md-8">
+            Response status: <span id="response_status"></span>
+        </div>
+        </div>
+        <div class="row">
+          <label class="col-md-8 control-label" for="response_text">Response Text</label>
+          <div class="col-md-9">
+            <pre id="response_text"></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  
+  <!-- jQuery for form to API interaction -->
+  <script src="ajax.js"></script>
+</body>
+</html>

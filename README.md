@@ -316,15 +316,7 @@ Left flexibility for notes by simply adding additional data to the database and 
 ## Installation Instructions
 
 #some setup commands:
-docker-compose build
-docker-machine start default
-docker-machine create
-docker-machine ls
 
-
-docker-compose up
-docker-compose down
 
 #compile and run the source code
-dockerbuild -t <name>
-docker run -p 80:80 <name>
+

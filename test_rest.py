@@ -20,19 +20,19 @@ def pretty_print_response(response):
     )         
     
 def test_post_headers_body_json_fail():
-    url = 'http://localhost:5000/'
+    url = 'http://localhost:5000/login'
     
     # Additional headers.
     headers = {'Content-Type': 'application/json' } 
 
     # Body
-    payload = {'key1': 1, 'key2': 'value2'}
+    payload = {'username': 1, 'password': 'value2'}
     
     # convert dict to json by json.dumps() for body data. 
     resp = requests.post(url, headers=headers, data=json.dumps(payload,indent=4))       
     
     # Validate response headers and body contents, e.g. status code.
-    assert resp.status_code == 201
+    assert resp.status_code == 401
     resp_body = resp.json()
     assert resp_body['url'] == url
     

@@ -12,12 +12,46 @@ import bcrypt
 from models.auth_model import Auth_Model
 
 class Auth_Controller:
+    """
+    Handles the logic for loging users in and checking their tokens
+
+    ...
+    Attributes
+    ----------
+    secretkey : str
+        unpublished private key to provide and check valid tokens
+    check_value : str
+        An extra security measure. The string is stored in the token provided to the user and decrypted when checking if the token is valid
+    
+    Methods
+    ----------
+    login() -> str
+        Gets login details from the request.
+        Calls the Auth_Model to grab the encrypted password from the database. Checks whether the provided password matches the encrypted password
+    check_token() -> bool
+        Gets the token details from the request.
+        Decrypts the token to check if it is valid
+    """
     def __init__(self):
+        """ Initialises the secretkey and check_value """
         self.secretkey = '48oybc+s43"$^saF'
         self.check_value = 'sdFs435guPaZ@9'
 
     def login(self) -> str:
-        
+        """
+        Gets login details from the request.
+        Calls the Auth_Model to grab the encrypted password from the database. Checks whether the provided password matches the encrypted password
+
+        Returns
+        ----------
+        str
+            encrypted token to be provided back to the user for subsequent interactions with the change float
+
+        Raises
+        ----------
+        Exception
+            If the username and password do not match that stored in the database, raise a 400 error
+        """
         # Parse the arguments into an object to pick up the provided coin types and values
         login_obj = request.get_json()
 
@@ -28,7 +62,9 @@ class Auth_Controller:
         salt = bcrypt.gensalt()
         auth_model = Auth_Model()
         encrypted_password_from_db = auth_model.login(login_obj['username'])
-        if bcrypt.checkpw(login_obj['password'].encode('utf-8'), encrypted_password_from_db):
+        if encrypted_password_from_db is None:
+            raise Exception(401,'Login unsuccessful')
+        if bcrypt.checkpw(login_obj['password'].encode('utf-8'), encrypted_password_from_db['password']):
             hashed_check_value = bcrypt.hashpw(self.check_value.encode('utf-8'), salt)
             token = jwt.encode( { 'check_value' : hashed_check_value.decode('utf-8'), 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=15) }, self.secretkey, algorithm='HS256' )
             return token.decode('UTF-8')
@@ -36,6 +72,20 @@ class Auth_Controller:
             raise Exception(401,'Login unsuccessful')
 
     def check_token(self) -> bool:
+        """
+        Gets the token details from the request.
+        Decrypts the token to check if it is valid
+
+        Returns
+        ----------
+        bool
+            True if the token is valid and exception not thrown
+
+        Raises
+        ----------
+        Exception
+            If the token is invalid, raise a 401 error
+        """
         # get the token from the request
         token_obj = request.get_json()
 

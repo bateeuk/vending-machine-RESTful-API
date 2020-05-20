@@ -20,16 +20,19 @@ api = Api(app)
 
 @app.route("/")
 def index():
-    # Show the README file to provide suitable documentation on the usage of the API
+    """ Show the README file to provide suitable documentation on the usage of the API """
 
-    # Open the README file
-    with open('../README.md', 'r') as markdown_file:
+    try:
+        # Open the README file
+        with open('../README.md', 'r') as markdown_file:
 
-        # Read the content of the file
-        content = markdown_file.read()
+            # Read the content of the file
+            content = markdown_file.read()
 
-        # Convert to HTML
-        return markdown.markdown(content)
+            # Convert to HTML
+            return markdown.markdown(content)
+    except:
+        return "Could not find the README file", 404
 
 # For all other routes, load the respective classes
 api.add_resource(Auth_View, '/login')

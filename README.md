@@ -8,7 +8,11 @@ A RESTful implementation of a basic vending machine system
 
 This Python app was built and tested using Python 3.8.
 
-The app was created in a virtual environment, see setup instructions below, but you can install it on any system running Python 3.8
+The app was created in a virtual environment on a Debian-based Linux distro, see setup instructions below, but you can install it on any system running Python 3.8
+
+**Install the virtual environment**
+
+`$ apt-get install python3-virtualenv`
 
 **Create a virtual environment**
 

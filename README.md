@@ -2,6 +2,47 @@
 # Vending Machine RESTful API
 A RESTful implementation of a basic vending machine system
 
+# Installation Instructions
+
+## Server-side API
+
+This Python app was built and tested using Python 3.8.
+
+The app was created in a virtual environment, see setup instructions below, but you can install it on any system running Python 3.8
+
+**Create a virtual environment**
+`$ virtualenv -p python3.8 venv`
+
+**Run/Enter the virtual environment**
+`$ source venv/bin/activate`
+
+**move into the root of the project folder**
+`$ cd path/to/project/root`
+
+**Install the requirements**
+`$ pip3 install -r requirements.txt`
+
+**move into the api folder**
+`$ cd api`
+
+**assign and run the Python script**
+`$ export FLASK_APP=main.py`
+
+`$ flask run --host 0.0.0.0`
+
+**Running the app**
+Load up the URL in the browser: http://127.0.0.1:5000/
+
+**Disable the Flask server from running**
+`CTRL + C`
+
+**Leave the virtual environment**
+`$ deactivate`
+
+## Client-side Test Interface
+The test interface is a static HTML page with some JavaScript so does not need to run through a server.
+Simply open the .html file locally in a webbrowser to start testing the system.
+
 # Usage
 
 There are four routes into this API:
@@ -302,46 +343,6 @@ Example:
 }
 ```
 
-# Installation Instructions
-
-## Server-side API
-
-This Python app was built and tested using Python 3.8.
-
-The app was created in a virtual environment, see setup instructions below, but you can install it on any system running Python 3.8
-
-**Create a virtual environment**
-`$ virtualenv -p python3.8 venv`
-
-**Run/Enter the virtual environment**
-`$ source venv/bin/activate`
-
-**move into the root of the project folder**
-`$ cd path/to/project/root`
-
-**Install the requirements**
-`$ pip3 install -r requirements.txt`
-
-**move into the api folder**
-`$ cd api`
-
-**assign and run the Python script**
-`$ export FLASK_APP=main.py`
-
-`$ flask run --host 0.0.0.0`
-
-**Running the app**
-Load up the URL in the browser: http://127.0.0.1:5000/
-
-**Disable the Flask server from running**
-`CTRL + C`
-
-**Leave the virtual environment**
-`$ deactivate`
-
-## Client-side Test Interface
-The test interface is a static HTML page with some JavaScript so does not need to run through a server.
-Simply open the .html file locally in a webbrowser to start testing the system.
 
 # Design Decisions
 

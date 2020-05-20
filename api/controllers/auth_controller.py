@@ -13,41 +13,37 @@ from models.auth_model import Auth_Model
 
 class Auth_Controller:
     def __init__(self):
-        self.am = Auth_Model()
         self.secretkey = '48oybc+s43"$^saF'
-        self.ok = 'sdFs435guPaZ@9'
+        self.check_value = 'sdFs435guPaZ@9'
 
-    def login(self):
+    def login(self) -> str:
         
         # Parse the arguments into an object to pick up the provided coin types and values
         login_obj = request.get_json()
 
         if 'username' not in login_obj.keys() or 'password' not in login_obj.keys():
-            return {'message': 'invalid or missing params' }, 400
+            raise Exception(400,'Invalid or missing params')
 
-        #salt used to encrypt the encoded message (self.ok)
+        #salt used to encrypt the encoded message (self.check_value)
         salt = bcrypt.gensalt()
-
-        if self.am.login(login_obj) == False:
-            return {'message': 'auth error' }, 401
+        auth_model = Auth_Model()
+        encrypted_password_from_db = auth_model.login(login_obj['username'])
+        if bcrypt.checkpw(login_obj['password'].encode('utf-8'), encrypted_password_from_db):
+            hashed_check_value = bcrypt.hashpw(self.check_value.encode('utf-8'), salt)
+            token = jwt.encode( { 'check_value' : hashed_check_value.decode('utf-8'), 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=15) }, self.secretkey, algorithm='HS256' )
+            return token.decode('UTF-8')
         else:
-            hashed_ok = bcrypt.hashpw(self.ok.encode('utf-8'), salt)
-            token = jwt.encode( { 'ok' : hashed_ok.decode('utf-8'), 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=15) }, self.secretkey, algorithm='HS256' )
-            return {'token': token.decode('UTF-8') }, 200
+            raise Exception(401,'Login unsuccessful')
 
-    def check_token(self):
+    def check_token(self) -> bool:
         # get the token from the request
         token_obj = request.get_json()
 
         try:
-            #salt used to encrypt the encoded message (self.ok)
-            salt = bcrypt.gensalt()
             decoded_token = jwt.decode(token_obj['token'], self.secretkey, algorithms=['HS256'])
-
-            if bcrypt.checkpw(self.ok.encode('utf-8'), decoded_token['ok'].encode('utf-8')):
-                return {'message': 'check_token()', 'data': {}}, 200
-            else:
-                return {'message': 'auth error' }, 401
-
+            if bcrypt.checkpw(self.check_value.encode('utf-8'), decoded_token['check_value'].encode('utf-8')) == False:
+                raise Exception(401,'Authentication failed')
         except:
-            return {'message': 'missing or invalid token auth error' }, 401
+            raise Exception(401,'Missing or invalid token')
+        else:
+            return True

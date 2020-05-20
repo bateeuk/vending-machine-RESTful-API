@@ -37,7 +37,6 @@ Example:
 
 **Definition**
 
-`PUT /float` to remove the existing float and set a new value with new coins
 `POST /float` to add to the existing float with additional coins
 
 **Arguments**
@@ -65,6 +64,41 @@ Example:
 - `400 Bad Request` if one or more parameters is missing, or the data provided is invalid
 - `401 Unauthorised` if token is not valid
 - `200 OK` on success
+
+**Definition**
+
+`DELETE /float` to remove the float from the vending machine and return all coins
+
+**Arguments**
+- `???`
+
+Example:
+```json
+{
+	"token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvayI6Im9rIiwiZXhwIjoxNTg5OTAwNDAyfQ.p40fA0hpOzEmcvQPeHF2BYZncF1OfLWwwEaxQ-bc1DU",
+}
+```
+
+**Response**
+
+- `400 Bad Request` if one or more parameters is missing, or the data provided is invalid
+- `401 Unauthorised` if token is not valid
+- `200 OK` on success
+
+```json{
+    "value": 19660,
+    "coins": {
+        "200": 0,
+        "100": 43,
+        "50": 102,
+        "20": 243,
+        "10": 300,
+        "5": 400,
+        "2": 100,
+        "1": 200
+    }
+}
+```
 
 ### Lookup the current float details
 

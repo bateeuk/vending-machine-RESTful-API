@@ -25,10 +25,10 @@ class Change_Model():
         self.db.query_db_for_list('UPDATE change_float SET quantity=0')
         self.coins = { "value" : 0, "coins" : {}}
     
-    def add_change(self, quantity, coin):
+    def add_change(self, quantity:int, coin:str):
         self.db.query_db_for_list('UPDATE change_float SET quantity = (quantity+?) WHERE coin=?', (quantity, coin))
         self.get_change()
 
-    def remove_change(self, quantity, coin):
+    def remove_change(self, quantity:int, coin:str):
         self.db.query_db_for_list('UPDATE change_float SET quantity = (quantity-?) WHERE coin=?', (quantity, coin))
         self.get_change()

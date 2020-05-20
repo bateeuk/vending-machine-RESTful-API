@@ -3,21 +3,26 @@
 from flask import Flask, g
 from flask_restful import Resource, Api, reqparse
 
+
 # Import the classes
 from controllers.vend_controller import Vend_Controller
+from controllers.error_controller import Error_Controller
 
 class Vend_View(Resource):
     def __init__(self):
-        self.vc = Vend_Controller()
+        self.vend_controller = Vend_Controller()
+        self.error_controller = Error_Controller()
 
-    def get(self, location):
-        product = self.vc.view_product(location)
-        if len(product) > 0:
-            return product, 200
-        else:
-            return { "message": "Location not found" }, 404
+    def get(self, location:str):
+        try:
+            product = self.vend_controller.view_product(location)
+            return { 'message': 'Success', "data" : product }, 200
+        except Exception as e:
+            return self.error_controller.handle(e)
 
-    def post(self, location):
-        product = self.vc.purchase_product(location)
-        return product
-
+    def post(self, location:str):
+        try:
+            product = self.vend_controller.purchase_product(location)
+            return { 'message': 'Success', "data" : product }, 200
+        except Exception as e:
+            return self.error_controller.handle(e)
